@@ -24,4 +24,5 @@ public class CustomExceptionHandler {
         log.error(customValidationException.getMessage());
         return new ResponseEntity<>(new ResponseDto<>(-1, customValidationException.getMessage(),customValidationException.getErrorMap()), HttpStatus.BAD_REQUEST);
     }
+
 }

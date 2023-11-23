@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CustomResponseUtil {
 
-    public static void unAuthentication(HttpServletResponse response, Integer status, String message){
+    public static void fail(HttpServletResponse response, Integer status, String message){
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -18,6 +18,21 @@ public class CustomResponseUtil {
             responseBody = objectMapper.writeValueAsString(responseDto);
             response.setContentType("application/json; charset=utf-8");
             response.setStatus(status);
+            response.getWriter().println(responseBody);  // 예쁘게 메시지를 포장하는 공통적인 응답 DTO생성
+        } catch (Exception e) {
+            log.error("서버 파싱 에러");
+        }
+    }
+
+    public static void success(HttpServletResponse response, Object dto){
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            ResponseDto<?> responseDto = new ResponseDto<>(1, "로그인 성공", dto);
+            String responseBody = null;
+            responseBody = objectMapper.writeValueAsString(responseDto);
+            response.setContentType("application/json; charset=utf-8");
+            response.setStatus(200);
             response.getWriter().println(responseBody);  // 예쁘게 메시지를 포장하는 공통적인 응답 DTO생성
         } catch (Exception e) {
             log.error("서버 파싱 에러");
