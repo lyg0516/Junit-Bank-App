@@ -34,6 +34,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         chain.doFilter(request, response);
+        // 만약 doFilter가 아니라 여기서 response를 반환는거보다 시큐리타가 제어권을 가지는게 테스트하기 편하다
     }
 
     private boolean isHeaderVerify(HttpServletRequest request, HttpServletResponse response){
